@@ -1,34 +1,39 @@
+import sys
+
 def main():
-  alfabeto = "abcdefghijklmnopqrstuvwxyz"
+  data = sys.stdin.read().split('\n')
+  n = int(data[0])
+  saida = []
 
-  n = int(input())
-
-  for _ in range(n):
-    palavra = str(input())
-    resultado = ""
-
+  for i in range(1, n + 1):
+    palavra = data[i]
+    resultado = []
     c = 0
-    num = 0
+    length = len(palavra)
 
-    while c < len(palavra):
-      letra = palavra[c]
-      if letra in alfabeto:
+    while c < length:
+      ch = palavra[c]
+      if ch == ' ':
+        resultado.append(' ')
         c += 1
+      elif ch.isalpha():
+        resultado.append(ch)
+        c += 1
+      elif ch == '9':
+        num = int(palavra[c:c + 2])
+        resultado.append(chr(num))
+        c += 2
+      elif ch == '1':
+        num = int(palavra[c:c + 3])
+        resultado.append(chr(num))
+        c += 3
       else:
-        if letra == "9":
-          num = int(letra + palavra[c + 1])
-          letra = alfabeto[num - 97]
-          c += 2
-        elif letra == "1":
-          num = int(letra + palavra[c + 1] + palavra[c + 2])
-          letra = alfabeto[num - 97]
-          c += 3
+        resultado.append(ch)
+        c += 1
 
-      resultado += letra
+    saida.append("".join(resultado))
 
-    print(resultado)
-
-  return 0
+  sys.stdout.write("\n".join(saida) + "\n")
 
 if __name__ == "__main__":
   main()
